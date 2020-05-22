@@ -1,0 +1,2 @@
+# stfuandclick
+Button clicking game
