@@ -32,7 +32,8 @@
     "document-register-element": "1.13.1",
     "emotion-reset": "^2.0.7",
     "react": "16.12.0",
-    "react-dom": "16.12.0"
+    "react-dom": "16.12.0",
+    "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
     "@nrwl/cypress": "9.3.0",

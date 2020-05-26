@@ -11,7 +11,7 @@ const StyledMain = styled('main')<MainProps>`
   flex: 1;
   align-self: center;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   width: 100%;
   max-width: 540px;
 `

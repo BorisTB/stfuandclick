@@ -7,7 +7,30 @@ export interface ButtonProps {
 }
 
 const StyledButton = styled.button`
-  color: pink;
+  padding: 0.6rem 3rem;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #fff;
+  text-transform: uppercase;
+  background-color: #4a8fe2;
+  border: none;
+  border-radius: 6px;
+
+  &:not(:disabled) {
+    cursor: pointer;
+
+    &:focus {
+      background-color: #3181e2;
+    }
+
+    &:hover {
+      background-color: #277de4;
+    }
+  }
+
+  &:focus {
+    outline: none;
+  }
 `
 
 export const Button: React.FC<ButtonProps> = ({ children, type }) => (
