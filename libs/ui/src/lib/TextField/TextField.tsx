@@ -1,11 +1,16 @@
-import React from 'react'
+import React, { useCallback, useRef } from 'react'
 
 import styled from '@emotion/styled'
 
 export interface TextFieldProps {
+  copyOnClick?: boolean
+  disabled?: boolean
   label?: string
+  onChange?: (e: React.SyntheticEvent<HTMLInputElement>) => void
   placeholder?: string
+  readOnly?: boolean
   type?: 'text' | 'password'
+  value?: string
 }
 
 const LabelText = styled.div`
@@ -33,15 +38,37 @@ const StyledInput = styled.input`
 `
 
 export const TextField: React.FC<TextFieldProps> = ({
+  copyOnClick,
+  disabled,
   label,
+  onChange,
   placeholder,
-  type
-}) => (
-  <StyledLabel>
-    {label && <LabelText>{label}</LabelText>}
-    <StyledInput type={type} placeholder={placeholder} />
-  </StyledLabel>
-)
+  readOnly,
+  type,
+  value
+}) => {
+  const inputRef = useRef(null)
+  const copyValue = () => {
+    inputRef.current.select()
+    document.execCommand('copy')
+  }
+
+  return (
+    <StyledLabel>
+      {label && <LabelText>{label}</LabelText>}
+      <StyledInput
+        ref={inputRef}
+        type={type}
+        placeholder={placeholder}
+        readOnly={readOnly}
+        disabled={disabled}
+        onChange={onChange}
+        value={value}
+        onClick={copyOnClick && copyValue}
+      />
+    </StyledLabel>
+  )
+}
 
 TextField.defaultProps = {
   type: 'text'

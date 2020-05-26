@@ -4,7 +4,7 @@ import styled from '@emotion/styled'
 
 import { Button, Card, TextField, Quote, Ribbon } from '@stfuandclick/ui'
 
-import ScoreTable from '../../components/ScoreTable/ScoreTable'
+import { Motivator, ScoreBoard } from '../../components'
 
 const StyledForm = styled.form`
   display: flex;
@@ -37,7 +37,9 @@ export const CreateTeam = () => {
 
         <Ribbon>TOP 10 Clickers</Ribbon>
 
-        <ScoreTable />
+        <ScoreBoard />
+
+        <Motivator />
       </Card>
     </>
   )

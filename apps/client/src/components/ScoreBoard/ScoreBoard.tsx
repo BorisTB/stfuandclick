@@ -2,11 +2,11 @@ import React, { useMemo } from 'react'
 
 import { DataGrid } from '@stfuandclick/ui'
 
-interface ScoreTable {
+export interface ScoreBoardProps {
   data?: object[]
 }
 
-const ScoreTable: React.FC<ScoreTable> = ({ data }) => {
+export const ScoreBoard: React.FC<ScoreBoardProps> = ({ data }) => {
   const columns = useMemo(
     () => [
       {
@@ -27,4 +27,4 @@ const ScoreTable: React.FC<ScoreTable> = ({ data }) => {
   return <DataGrid columns={columns} data={data} />
 }
 
-export default ScoreTable
+export default ScoreBoard

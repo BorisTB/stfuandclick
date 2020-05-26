@@ -3,6 +3,7 @@ import React from 'react'
 import styled from '@emotion/styled'
 
 export interface ButtonProps {
+  onClick?: (e: React.SyntheticEvent<HTMLButtonElement>) => void
   type?: 'button' | 'submit'
 }
 
@@ -33,8 +34,10 @@ const StyledButton = styled.button`
   }
 `
 
-export const Button: React.FC<ButtonProps> = ({ children, type }) => (
-  <StyledButton type={type}>{children}</StyledButton>
+export const Button: React.FC<ButtonProps> = ({ children, onClick, type }) => (
+  <StyledButton type={type} onClick={onClick}>
+    {children}
+  </StyledButton>
 )
 
 Button.defaultProps = {
