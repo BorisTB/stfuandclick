@@ -10,7 +10,7 @@ export interface FooterProps {}
 const StyledFooter = styled.footer`
   display: flex;
   bottom: 0;
-  margin-bottom: 1rem;
+  margin: 1rem 0;
   align-items: center;
   justify-content: center;
   width: 100%;
