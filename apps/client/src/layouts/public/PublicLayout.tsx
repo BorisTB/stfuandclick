@@ -2,6 +2,7 @@ import React from 'react'
 
 import styled from '@emotion/styled'
 
+import Footer from './Footer/Footer'
 import Header from './Header/Header'
 import Main from './Main/Main'
 
@@ -20,6 +21,7 @@ export const PublicLayout = ({ children }) => (
   <Wrapper>
     <Header />
     <Main>{children}</Main>
+    <Footer />
   </Wrapper>
 )
 

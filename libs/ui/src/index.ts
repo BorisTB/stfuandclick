@@ -1,3 +1,4 @@
+export * from './lib/Link/Link'
 export * from './lib/Counter/Counter'
 export * from './lib/Ribbon/Ribbon'
 export * from './lib/DataGrid/DataGrid'

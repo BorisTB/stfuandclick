@@ -34,10 +34,8 @@ const StyledButton = styled.button`
   }
 `
 
-export const Button: React.FC<ButtonProps> = ({ children, onClick, type }) => (
-  <StyledButton type={type} onClick={onClick}>
-    {children}
-  </StyledButton>
+export const Button: React.FC<ButtonProps> = props => (
+  <StyledButton {...props} />
 )
 
 Button.defaultProps = {

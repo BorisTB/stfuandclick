@@ -21,6 +21,15 @@ const Counters = styled.div`
     flex: 1;
   }
 `
+const ButtonWrapper = styled.div`
+  width: 100%;
+  padding: 0.6rem;
+`
+
+const StyledButton = styled(Button)`
+  width: 100%;
+  padding: 2rem;
+`
 
 export const Game = () => {
   const url = window?.location?.href
@@ -34,7 +43,7 @@ export const Game = () => {
   }, [])
 
   return (
-    <div>
+    <>
       <h1>Clicking for team</h1>
       <InfoText>
         Too lazy to click? Let your pals click for you:{' '}
@@ -42,7 +51,9 @@ export const Game = () => {
       </InfoText>
 
       <Card>
-        <Button onClick={onClick}>Click!</Button>
+        <ButtonWrapper>
+          <StyledButton onClick={onClick}>Click!</StyledButton>
+        </ButtonWrapper>
 
         <Counters>
           <Counter title="Your clicks:">{clicksCount}</Counter>
@@ -53,7 +64,7 @@ export const Game = () => {
 
         <Motivator />
       </Card>
-    </div>
+    </>
   )
 }
 
