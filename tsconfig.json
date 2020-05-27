@@ -16,7 +16,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@stfuandclick/ui": ["libs/ui/src/index.ts"]
+      "@stfuandclick/ui": ["libs/ui/src/index.ts"],
+      "@stfuandclick/data": ["libs/data/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

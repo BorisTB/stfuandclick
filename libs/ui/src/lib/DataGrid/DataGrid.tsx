@@ -4,8 +4,8 @@ import styled from '@emotion/styled'
 
 export interface DataGridColumnConfig<T> {
   Header?: React.ReactNode
-  dataKey?: keyof T
-  Cell?: (dataItem: T) => React.ReactNode
+  dataKey?: string
+  Cell?: (dataItem: T, rowIndex: number) => React.ReactNode
   width?: number
   align?: 'left' | 'right' | 'center' | 'justify'
   headerAlign?: 'left' | 'right' | 'center' | 'justify' | 'char'
@@ -74,18 +74,22 @@ export const DataGrid = <T extends object>({
   return (
     <Table>
       <colgroup>{cols}</colgroup>
-      <Thead>{ths}</Thead>
+      <Thead>
+        <Tr>{ths}</Tr>
+      </Thead>
       <Tbody>
         {{
           ready:
             data &&
-            data.map(dataItem => (
+            data.map((dataItem, rowIndex) => (
               <Tr key={dataItem[idKey]}>
                 {columns.map((column, colIndex) => (
                   <Td
                     key={`${dataItem[idKey]}-${colIndex}`}
                     align={column.align}>
-                    {column.Cell(dataItem)}
+                    {typeof column.Cell === 'function'
+                      ? column.Cell(dataItem, rowIndex)
+                      : dataItem[column.dataKey]}
                   </Td>
                 ))}
               </Tr>

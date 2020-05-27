@@ -10,15 +10,15 @@ export const ScoreBoard: React.FC<ScoreBoardProps> = ({ data }) => {
   const columns = useMemo(
     () => [
       {
-        Cell: () => 1
+        Cell: (dataItem, rowIndex) => rowIndex + 1
       },
       {
         Header: 'Team',
-        Cell: () => 'abc'
+        dataKey: 'name'
       },
       {
         Header: 'Clicks',
-        Cell: () => 1324
+        dataKey: 'clicks'
       }
     ],
     []

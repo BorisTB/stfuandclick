@@ -1,10 +1,10 @@
-import React, { useCallback } from 'react'
-
+import React, { useCallback, useEffect } from 'react'
 import styled from '@emotion/styled'
-
+import { useDispatch, useSelector } from 'react-redux'
 import { Button, Card, TextField, Quote, Ribbon } from '@stfuandclick/ui'
-
 import { Motivator, ScoreBoard } from '../../components'
+import { teamActions, teamSelectors } from '../../store/team.slice'
+import { AppDispatch } from '../../store'
 
 const StyledForm = styled.form`
   display: flex;
@@ -13,11 +13,23 @@ const StyledForm = styled.form`
 `
 
 export const CreateTeam = () => {
+  const { teams } = useSelector(teamSelectors.getTopTenTeams)
+
   const createTeam = useCallback(e => {
     console.log({ e })
 
     e.preventDefault()
   }, [])
+
+  const dispatch: AppDispatch = useDispatch()
+
+  useEffect(() => {
+    const promise = dispatch(teamActions.fetchTeams())
+
+    return () => {
+      promise.abort()
+    }
+  }, [dispatch])
 
   return (
     <>
@@ -37,7 +49,7 @@ export const CreateTeam = () => {
 
         <Ribbon>TOP 10 Clickers</Ribbon>
 
-        <ScoreBoard />
+        <ScoreBoard data={teams} />
 
         <Motivator />
       </Card>
