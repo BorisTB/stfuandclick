@@ -52,12 +52,13 @@ export const Game = () => {
         dispatch(
           teamActions.click({
             teamName,
-            session: current.session
+            session: current.session,
+            clicks: current.clicks + 1
           })
         )
       }
     },
-    [dispatch, teamName, current.session]
+    [dispatch, teamName, current.session, current.clicks]
   )
 
   useEffect(() => {

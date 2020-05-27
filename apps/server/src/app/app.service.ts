@@ -39,7 +39,7 @@ export class AppService {
   async updateTeam(
     updateTeamInput: UpdateTeamInput
   ): Promise<{
-    data: Team
+    data: Team[]
   }> {
     let game = await this.gameModel
       .findOne({ session: updateTeamInput.session })
@@ -55,13 +55,6 @@ export class AppService {
     game.clicks = updateTeamInput.clicks
     await game.save()
 
-    const currentTeam = await this.gameModel
-      .aggregate([
-        { $match: { team: updateTeamInput.teamName } },
-        { $group: { _id: null, clicks: { $sum: '$clicks' } } }
-      ])
-      .exec()
-
     const teams = await this.gameModel
       .aggregate([
         {
@@ -74,8 +67,6 @@ export class AppService {
       .sort({ clicks: -1 })
       .exec()
 
-    console.log({ teams })
-
-    return { data: {} }
+    return { data: teams }
   }
 }

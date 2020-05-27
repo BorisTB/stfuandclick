@@ -59,13 +59,14 @@ export const fetchTeams = createAsyncThunk('team/fetchStatus', async () => {
 
 export const click = createAsyncThunk(
   'team/click',
-  async ({ teamName, session }: UpdateTeamInput) => {
+  async (updateTeamInput: UpdateTeamInput) => {
     // TODO: implement validation errors
-    const result = await mainApi.getLeaderboard()
-    return {
-      teamName,
-      session
+    const input = {
+      ...updateTeamInput,
+      teamName: updateTeamInput.teamName.trim()
     }
+    mainApi.updateTeam(input)
+    return input
   }
 )
 
@@ -129,6 +130,12 @@ export const teamSlice = createSlice({
       fetchTeams.fulfilled,
       (state: TeamState, action: PayloadAction<TeamEntity[]>) => {
         teamAdapter.addMany(state, action.payload)
+        const cur = action.payload.find(
+          team => team.name === state.current.teamName
+        )
+        if (cur) {
+          state.entities[state.current.teamName] = cur
+        }
         state.loadingStatus = 'loaded'
       }
     )

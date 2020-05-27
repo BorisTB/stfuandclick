@@ -82,7 +82,7 @@ export const DataGrid = <T extends object>({
           ready:
             data &&
             data.map((dataItem, rowIndex) => (
-              <Tr key={dataItem[idKey]}>
+              <Tr key={dataItem[idKey] + rowIndex}>
                 {columns.map((column, colIndex) => (
                   <Td
                     key={`${dataItem[idKey]}-${colIndex}`}

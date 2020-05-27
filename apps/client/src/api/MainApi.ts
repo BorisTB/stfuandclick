@@ -1,5 +1,5 @@
 import HttpClient from './HttpClient'
-import { Team } from '@stfuandclick/data'
+import { Team, UpdateTeamInput } from '@stfuandclick/data'
 
 export class MainApi extends HttpClient {
   public constructor() {
@@ -7,6 +7,9 @@ export class MainApi extends HttpClient {
   }
 
   public getLeaderboard = () => this.instance.get<Team[]>('/leaderboard')
+
+  public updateTeam = (updateTeamInput: UpdateTeamInput) =>
+    this.instance.post<Team[]>('/click', updateTeamInput)
 }
 
 export const mainApi = new MainApi()
