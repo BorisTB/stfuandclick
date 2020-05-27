@@ -4,7 +4,7 @@ import { DataGrid, DataGridColumnConfig } from '@stfuandclick/ui'
 
 export interface ScoreBoardProps {
   data?: object[]
-  highlight: string
+  highlight?: string
 }
 
 export const ScoreBoard: React.FC<ScoreBoardProps> = ({ data, highlight }) => {

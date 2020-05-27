@@ -77,6 +77,7 @@ Visit the [Nx Documentation](https://nx.dev) to learn more.
 
 ## TODO
 
+- finish documentation
 - finish tests
 - storybook for UI library
 - Consider removing Redux

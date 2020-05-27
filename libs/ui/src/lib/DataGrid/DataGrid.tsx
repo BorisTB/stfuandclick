@@ -17,7 +17,7 @@ export interface DataGridProps<T> {
   idKey?: string
   loading?: boolean
   emptyDataMessage?: string
-  highlight: string
+  highlight?: string
 }
 
 export interface DataGridTdProps {

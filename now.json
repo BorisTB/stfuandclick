@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "name": "stfuandclick",
+  "builds": [
+    { "src": "/dist/apps/server/main.js", "use": "@now
+/node" },
+    { "src": "/dist/apps/client/*", "use": "@now
+/static" }
+  ],
+  "routes": [
+    { "src": "/server/(.*)", "dest": "/dist/apps/server/main.js" },
+    { "handle": "filesystem" },
+    { "src": "/assets/(.*)", "dest": "/dist/apps/client/assets/$1"},
+    { "src": "/(.*).(js|css|ico)", "dest": "/dist/apps/client/$1.$2" },
+    { "src": "/(.*)", "dest": "/dist/apps/client/index.html" }
+  ]
+}
