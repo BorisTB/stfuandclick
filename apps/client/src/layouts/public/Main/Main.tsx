@@ -14,6 +14,7 @@ const StyledMain = styled('main')<MainProps>`
   justify-content: flex-start;
   width: 100%;
   max-width: 540px;
+  padding: 0.5rem;
 `
 
 export const Main: React.FC<MainProps> = ({ children }) => (

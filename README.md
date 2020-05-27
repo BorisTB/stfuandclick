@@ -80,3 +80,4 @@ Visit the [Nx Documentation](https://nx.dev) to learn more.
 - Consider removing Redux
 - Tooltip when link is copied after click on input
 - Select team by clicking on table row
+- Consider SSR
