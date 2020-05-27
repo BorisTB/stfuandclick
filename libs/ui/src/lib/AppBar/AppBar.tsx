@@ -12,6 +12,7 @@ const StyledAppBar = styled('header')<AppBarProps>`
   left: 0;
   width: 100%;
   height: 40px;
+  min-height: 40px;
   color: #fff;
   background-color: #4a8fe2;
 

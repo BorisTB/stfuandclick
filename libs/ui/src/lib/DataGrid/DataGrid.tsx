@@ -23,16 +23,44 @@ export interface DataGridTdProps {
   align: 'left' | 'center' | 'right' | 'justify'
 }
 
+export interface DataGridThProps {
+  align: 'left' | 'center' | 'right' | 'justify' | 'char'
+}
+
 const Table = styled.table`
   width: 100%;
+  font-weight: bold;
 `
 const Col = styled.col``
-const Thead = styled.thead``
-const Th = styled.th``
-const Tbody = styled.tbody``
+const Thead = styled.thead`
+  color: #bdbdbd;
+  font-family: Arial Black;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+`
+const Th = styled('th')<DataGridThProps>`
+  text-align: ${props => props.align || 'center'};
+  padding: 0.4rem 1rem;
+`
+const Tbody = styled.tbody`
+  font-size: 0.9rem;
+
+  tr {
+    td {
+      background-color: #dae9f8;
+    }
+
+    &:nth-child(even) {
+      td {
+        background-color: #ebf3fd;
+      }
+    }
+  }
+`
 const Tr = styled.tr``
 const Td = styled('td')<DataGridTdProps>`
   text-align: ${props => props.align || 'left'};
+  padding: 0.7rem 1rem;
 `
 
 export const DataGrid = <T extends object>({
