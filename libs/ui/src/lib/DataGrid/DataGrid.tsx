@@ -17,10 +17,15 @@ export interface DataGridProps<T> {
   idKey?: string
   loading?: boolean
   emptyDataMessage?: string
+  highlight: string
 }
 
 export interface DataGridTdProps {
   align: 'left' | 'center' | 'right' | 'justify'
+}
+
+export interface DataGridTrProps {
+  highlight?: boolean
 }
 
 export interface DataGridThProps {
@@ -57,7 +62,19 @@ const Tbody = styled.tbody`
     }
   }
 `
-const Tr = styled.tr``
+const Tr = styled('tr')<DataGridTrProps>`
+  ${({ highlight }) =>
+    highlight
+      ? {
+          td: {
+            padding: '.8rem',
+            color: '#fff',
+            fontSize: '1.5rem',
+            backgroundColor: '#498EE1 !important'
+          }
+        }
+      : {}}
+`
 const Td = styled('td')<DataGridTdProps>`
   text-align: ${props => props.align || 'left'};
   padding: 0.7rem 1rem;
@@ -68,7 +85,8 @@ export const DataGrid = <T extends object>({
   data,
   idKey,
   loading,
-  emptyDataMessage
+  emptyDataMessage,
+  highlight
 }: DataGridProps<T>) => {
   const { cols, ths } = useMemo(
     () =>
@@ -110,7 +128,9 @@ export const DataGrid = <T extends object>({
           ready:
             data &&
             data.map((dataItem, rowIndex) => (
-              <Tr key={dataItem[idKey] + rowIndex}>
+              <Tr
+                key={dataItem[idKey] + rowIndex}
+                highlight={dataItem[idKey] === highlight}>
                 {columns.map((column, colIndex) => (
                   <Td
                     key={`${dataItem[idKey]}-${colIndex}`}

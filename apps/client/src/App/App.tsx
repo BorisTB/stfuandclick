@@ -30,6 +30,10 @@ export const App = () => {
             font-family: Arial, Helvetica, sans-serif;
             background-color: #f2f2f2;
           }
+
+          h1 {
+            font-size: 2rem;
+          }
         `}
       />
       <PublicLayout>

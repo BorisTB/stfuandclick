@@ -11,6 +11,8 @@ import { Motivator, ScoreBoard } from '../../components'
 const InfoText = styled.div`
   display: flex;
   align-items: center;
+  margin: 0 0 1rem;
+  font-size: 0.9rem;
   font-style: italic;
   white-space: nowrap;
 `
@@ -18,6 +20,7 @@ const InfoText = styled.div`
 const Counters = styled.div`
   display: flex;
   align-items: flex-start;
+  margin: 2rem 0;
 
   * {
     flex: 1;
@@ -33,8 +36,22 @@ const StyledButton = styled(Button)`
   padding: 2rem;
 `
 
+const TeamName = styled.span`
+  font-weight: bold;
+`
+
+const Title = styled.div`
+  margin: 2rem 0;
+`
+
+const StyledTextField = styled(TextField)`
+  margin: 0 0.2rem;
+  width: 220px;
+  font-size: 0.8rem;
+`
+
 export const Game = () => {
-  const url = window?.location?.href
+  const url = window?.location?.host + window?.location?.pathname
   const { teamName } = useParams()
   const { teams } = useSelector(teamSelectors.getTopTenTeams)
   const dispatch: AppDispatch = useDispatch()
@@ -71,10 +88,14 @@ export const Game = () => {
 
   return (
     <>
-      <h1>Clicking for team {current.team.name}</h1>
+      <Title>
+        <h1>
+          Clicking for team <TeamName>{current.team.name}</TeamName>
+        </h1>
+      </Title>
       <InfoText>
         Too lazy to click? Let your pals click for you:{' '}
-        <TextField readOnly value={url} copyOnClick />
+        <StyledTextField readOnly value={url} copyOnClick />
       </InfoText>
 
       <Card>
@@ -87,7 +108,7 @@ export const Game = () => {
           <Counter title="Team clicks:" value={current.team.clicks} />
         </Counters>
 
-        <ScoreBoard data={teams} />
+        <ScoreBoard data={teams} highlight={teamName} />
 
         <Motivator />
       </Card>

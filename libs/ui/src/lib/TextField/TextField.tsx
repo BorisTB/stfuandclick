@@ -45,7 +45,8 @@ export const TextField: React.FC<TextFieldProps> = ({
   placeholder,
   readOnly,
   type,
-  value
+  value,
+  ...props
 }) => {
   const inputRef = useRef(null)
   const copyValue = () => {
@@ -65,6 +66,7 @@ export const TextField: React.FC<TextFieldProps> = ({
         onChange={onChange}
         value={value}
         onClick={copyOnClick && copyValue}
+        {...props}
       />
     </StyledLabel>
   )

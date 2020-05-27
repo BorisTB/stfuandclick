@@ -4,9 +4,10 @@ import { DataGrid, DataGridColumnConfig } from '@stfuandclick/ui'
 
 export interface ScoreBoardProps {
   data?: object[]
+  highlight: string
 }
 
-export const ScoreBoard: React.FC<ScoreBoardProps> = ({ data }) => {
+export const ScoreBoard: React.FC<ScoreBoardProps> = ({ data, highlight }) => {
   const columns: DataGridColumnConfig<object>[] = useMemo(
     () => [
       {
@@ -26,7 +27,7 @@ export const ScoreBoard: React.FC<ScoreBoardProps> = ({ data }) => {
     []
   )
 
-  return <DataGrid columns={columns} data={data} />
+  return <DataGrid columns={columns} data={data} highlight={highlight} />
 }
 
 export default ScoreBoard
