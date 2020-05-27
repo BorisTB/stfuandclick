@@ -9,8 +9,22 @@ import { AppDispatch } from '../../store'
 
 const StyledForm = styled.form`
   display: flex;
+  margin: 0.6rem;
   justify-content: space-between;
   align-items: stretch;
+
+  button {
+    margin-left: 0.6rem;
+  }
+`
+
+const StyledQuote = styled(Quote)`
+  margin: 2rem 0;
+  height: 6rem;
+`
+
+const StyledRibbon = styled(Ribbon)`
+  margin-top: 5rem;
 `
 
 export const CreateTeam = () => {
@@ -46,9 +60,9 @@ export const CreateTeam = () => {
 
   return (
     <>
-      <Quote author="anonymous">
-        It's really simple, you just need to click as fast as you can.
-      </Quote>
+      <StyledQuote author="anonymous">
+        "It's really simple, you just need to click as fast as you can."
+      </StyledQuote>
 
       <Card>
         <StyledForm onSubmit={createTeam}>
@@ -62,7 +76,7 @@ export const CreateTeam = () => {
           <Button type="submit">Click!</Button>
         </StyledForm>
 
-        <Ribbon>TOP 10 Clickers</Ribbon>
+        <StyledRibbon>TOP 10 Clickers</StyledRibbon>
 
         <ScoreBoard data={teams} />
 

@@ -10,9 +10,6 @@ import PublicLayout from '../layouts/public/PublicLayout'
 import CreateTeam from '../views/CreateTeam/CreateTeam'
 import Game from '../views/Game/Game'
 
-import { ReactComponent as Logo } from './logo.svg'
-import star from './star.svg'
-
 const StyledApp = styled.div``
 
 export const App = () => {
@@ -30,6 +27,7 @@ export const App = () => {
           }
 
           body {
+            font-family: Arial, Helvetica, sans-serif;
             background-color: #f2f2f2;
           }
         `}

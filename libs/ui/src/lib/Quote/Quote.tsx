@@ -7,13 +7,25 @@ export interface QuoteProps {
   title?: string
 }
 
-const StyledFigure = styled.div`
+const StyledFigure = styled.figure`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
   font-style: italic;
+
+  figcaption {
+    text-align: right;
+  }
 `
 
-export const Quote: React.FC<QuoteProps> = ({ children, author, title }) => {
+export const Quote: React.FC<QuoteProps> = ({
+  children,
+  author,
+  title,
+  ...props
+}) => {
   return (
-    <StyledFigure>
+    <StyledFigure {...props}>
       <blockquote>{children}</blockquote>
       <figcaption>
         &mdash; {author}
