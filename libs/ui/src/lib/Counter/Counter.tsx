@@ -24,10 +24,10 @@ const Value = styled.div`
   color: #4a8fe2;
 `
 
-export const Counter: React.FC<CounterProps> = ({ children, title, value }) => (
+export const Counter: React.FC<CounterProps> = ({ title, value }) => (
   <StyledCounter>
     {title && <Title>{title}</Title>}
-    <Value>{value || children || 0}</Value>
+    <Value>{(value || 0).toLocaleString()}</Value>
   </StyledCounter>
 )
 

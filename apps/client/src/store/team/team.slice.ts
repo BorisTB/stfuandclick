@@ -1,14 +1,16 @@
 import {
+  createAction,
   createAsyncThunk,
   createEntityAdapter,
   createSlice,
   EntityState,
   PayloadAction
 } from '@reduxjs/toolkit'
+import { nanoid } from 'nanoid'
 
-import { Team } from '@stfuandclick/data'
+import { Team, UpdateTeamInput } from '@stfuandclick/data'
 
-import mainApi from '../api/MainApi'
+import mainApi from '../../api/MainApi'
 
 export const TEAM_FEATURE_KEY = 'team'
 
@@ -20,6 +22,13 @@ export type TeamEntity = Team
 export interface TeamState extends EntityState<TeamEntity> {
   loadingStatus: 'not loaded' | 'loading' | 'loaded' | 'error'
   error: string
+  current: Current
+}
+
+export interface Current {
+  session: string
+  teamName: string
+  clicks: number
 }
 
 export interface TeamsState {
@@ -28,7 +37,14 @@ export interface TeamsState {
   error: string
 }
 
+export interface ResolvedCurrent {
+  session: string
+  team: TeamEntity
+  clicks: number
+}
+
 export const teamAdapter = createEntityAdapter<TeamEntity>({
+  selectId: team => team.name,
   sortComparer: (a, b) => b.clicks - a.clicks
 })
 
@@ -36,9 +52,39 @@ export const teamAdapter = createEntityAdapter<TeamEntity>({
  * Export an effect using createAsyncThunk from
  * the Redux Toolkit: https://redux-toolkit.js.org/api/createAsyncThunk
  */
-export const fetchTeams = createAsyncThunk(
-  'team/fetchStatus',
-  async (_, thunkAPI) => {
+export const fetchTeams = createAsyncThunk('team/fetchStatus', async () => {
+  const result = await mainApi.getLeaderboard()
+  return result.data
+})
+
+export const click = createAsyncThunk(
+  'team/click',
+  async ({ teamName, session }: UpdateTeamInput) => {
+    // TODO: implement validation errors
+    const result = await mainApi.getLeaderboard()
+    return {
+      teamName,
+      session
+    }
+  }
+)
+
+export const setCurrentTeam = createAction(
+  'team/setCurrent',
+  (teamName: string) => {
+    return {
+      payload: {
+        teamName,
+        session: nanoid()
+      }
+    }
+  }
+)
+
+export const updateTeam = createAsyncThunk(
+  'team/update',
+  async ({ teamName, session }: UpdateTeamInput) => {
+    // TODO: implement validation errors
     const result = await mainApi.getLeaderboard()
     return result.data
   }
@@ -46,18 +92,36 @@ export const fetchTeams = createAsyncThunk(
 
 export const initialTeamState: TeamState = teamAdapter.getInitialState({
   loadingStatus: 'not loaded',
-  error: null
+  error: null,
+  current: {
+    session: '',
+    teamName: '',
+    clicks: 0
+  }
 })
 
 export const teamSlice = createSlice({
   name: TEAM_FEATURE_KEY,
   initialState: initialTeamState,
-  reducers: {
-    addTeam: teamAdapter.addOne,
-    removeTeam: teamAdapter.removeOne
-    // ...
-  },
+  reducers: {},
   extraReducers: builder => {
+    builder.addCase(setCurrentTeam, (state: TeamState, { payload }) => {
+      state.current.session = payload.session
+      state.current.teamName = payload.teamName
+
+      if (!state.entities[payload.teamName]) {
+        state.entities[payload.teamName] = {
+          order: state.ids.length + 1,
+          name: payload.teamName,
+          clicks: 0
+        }
+      }
+    })
+    builder.addCase(click.pending, (state: TeamState) => {
+      state.current.clicks = state.current.clicks + 1
+      state.entities[state.current.teamName].clicks =
+        state.entities[state.current.teamName].clicks + 1
+    })
     builder.addCase(fetchTeams.pending, (state: TeamState) => {
       state.loadingStatus = 'loading'
     })
@@ -93,7 +157,9 @@ export const teamReducer = teamSlice.reducer
  */
 export const teamActions = {
   ...teamSlice.actions,
-  fetchTeams
+  click,
+  fetchTeams,
+  setCurrentTeam
 }
 
 /*
@@ -113,9 +179,22 @@ export const teamSelectors = {
     const ids = rootState[TEAM_FEATURE_KEY].ids
 
     return {
-      teams: ids.slice(0, 10).map(id => entities[id]),
-      loading: rootState[TEAM_FEATURE_KEY].loadingStatus === 'loading',
-      error: rootState[TEAM_FEATURE_KEY].error
+      ...rootState[TEAM_FEATURE_KEY],
+      teams: ids
+        .slice(0, 10)
+        .map(id => entities[id])
+        .sort((a, b) => b.clicks - a.clicks),
+      loading: rootState[TEAM_FEATURE_KEY].loadingStatus === 'loading'
+    }
+  },
+  getCurrent: (rootState: unknown): ResolvedCurrent => {
+    const entities = rootState[TEAM_FEATURE_KEY].entities
+    const current = rootState[TEAM_FEATURE_KEY].current
+
+    return {
+      clicks: current.clicks,
+      session: current.session,
+      team: entities[current.teamName] || { name: current.teamName, clicks: 0 }
     }
   },
   ...teamAdapter.getSelectors()

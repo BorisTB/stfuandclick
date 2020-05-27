@@ -1,4 +1,5 @@
-import { Controller, Get } from '@nestjs/common'
+import { Body, Controller, Get, Post } from '@nestjs/common'
+import { UpdateTeamInput } from '@stfuandclick/data'
 
 import { AppService } from './app.service'
 
@@ -6,13 +7,13 @@ import { AppService } from './app.service'
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get()
-  getData() {
-    return this.appService.getData()
-  }
-
   @Get('leaderboard')
   getLeaderboard() {
     return this.appService.getLeaderboard()
+  }
+
+  @Post('click')
+  updateTeam(@Body() updateTeamInput: UpdateTeamInput) {
+    return this.appService.updateTeam(updateTeamInput)
   }
 }
