@@ -1,4 +1,6 @@
 export interface Team {
+  _id: string
+  id: string
   order: number
   name: string
   clicks: number
