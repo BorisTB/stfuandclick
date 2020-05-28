@@ -111,11 +111,15 @@ export const teamSlice = createSlice({
       state.current.teamName = payload.teamName
 
       if (!state.entities[payload.teamName]) {
+        console.log({ state })
         state.entities[payload.teamName] = {
+          _id: payload.teamName,
+          id: payload.teamName,
           order: state.ids.length + 1,
           name: payload.teamName,
           clicks: 0
         }
+        state.ids.push(payload.teamName)
       }
     })
     builder.addCase(click.pending, (state: TeamState) => {

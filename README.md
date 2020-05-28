@@ -79,6 +79,8 @@ Visit the [Nx Documentation](https://nx.dev) to learn more.
 
 - finish documentation
 - finish tests
+- use websockets to update clicks
+- debounce click request
 - storybook for UI library
 - Consider removing Redux
 - Tooltip when link is copied after click on input
