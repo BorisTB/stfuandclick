@@ -1,6 +1,9 @@
 {
   "version": 2,
   "name": "stfuandclick",
+  "env": {
+    "NX_MONGO_URI": "@stfu-mongo-uri"
+  },
   "builds": [
     { "src": "/dist/apps/server/main.js", "use": "@now/node" },
     { "src": "/dist/apps/client/*", "use": "@now/static" }
